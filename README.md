@@ -11,7 +11,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Open http://127.0.0.1:5000 in a browser.
+Open https://caretakers.onrender.com/ in a browser.
 
 ## Demo flow
 
