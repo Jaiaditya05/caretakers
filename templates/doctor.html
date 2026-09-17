@@ -1,0 +1,3424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Caretakers — Doctor Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .header {
+            background: white;
+            border-bottom: 1px solid #e7ebf1;
+            padding: 17px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .brand-subtitle {
+            font-size: 11px;
+            color: #7b8497;
+            margin-top: 2px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .role-badge {
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 8px 13px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .doctor-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8fafc;
+            padding: 7px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .doctor-avatar {
+            width: 31px;
+            height: 31px;
+            border-radius: 50%;
+            background: #dbeafe;
+            color: #1d4ed8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        .container {
+            width: min(1280px, 92%);
+            margin: auto;
+            padding: 30px 0 60px;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+
+        .welcome p {
+            color: #7b8497;
+            font-size: 14px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(4, 1fr);
+            margin-bottom: 18px;
+        }
+
+        .two-grid {
+            grid-template-columns: 1.15fr 1fr;
+            margin-bottom: 18px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e7ebf1;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow:
+                0 5px 20px rgba(15, 23, 42, 0.04);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .card-subtitle {
+            color: #8992a4;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .stat-card {
+            min-height: 135px;
+        }
+
+        .stat-label {
+            color: #7b8497;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .stat-value {
+            font-size: 30px;
+            font-weight: 850;
+        }
+
+        .stat-unit {
+            color: #7b8497;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .stat-note {
+            color: #8992a4;
+            font-size: 11px;
+            margin-top: 7px;
+        }
+
+        .patient-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 18px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 14px;
+        }
+
+        .patient-main {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .patient-avatar-large {
+            width: 52px;
+            height: 52px;
+            border-radius: 15px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 850;
+            font-size: 19px;
+        }
+
+        .patient-name {
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .patient-details {
+            color: #7b8497;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 9px;
+            border-radius: 999px;
+            background: #f1f5f9;
+            color: #64748b;
+            font-size: 10px;
+            font-weight: 750;
+            white-space: nowrap;
+        }
+
+        .badge.green {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .badge.red {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .badge.yellow {
+            background: #fef3c7;
+            color: #a16207;
+        }
+
+        .adherence-number {
+            font-size: 42px;
+            font-weight: 850;
+            margin-top: 20px;
+        }
+
+        .progress-track {
+            height: 10px;
+            background: #edf0f5;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 13px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: #2563eb;
+            border-radius: 999px;
+            transition: width 0.6s ease;
+        }
+
+        .adherence-text {
+            color: #7b8497;
+            font-size: 11px;
+            margin-top: 9px;
+        }
+
+        .med-list {
+            margin-top: 15px;
+        }
+
+        .med-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 13px 0;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .med-item:last-child {
+            border-bottom: none;
+        }
+
+        .med-main {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .med-icon {
+            width: 37px;
+            height: 37px;
+            border-radius: 10px;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .med-name {
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .med-details {
+            color: #8992a4;
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        .history-list {
+            max-height: 330px;
+            overflow-y: auto;
+            margin-top: 14px;
+        }
+
+        .history-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 0;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .history-left {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .history-icon {
+            width: 29px;
+            height: 29px;
+            border-radius: 8px;
+            background: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .history-name {
+            font-size: 11px;
+            font-weight: 750;
+        }
+
+        .history-time {
+            font-size: 9px;
+            color: #8992a4;
+            margin-top: 3px;
+        }
+
+        .appointment {
+            border: 1px solid #edf0f4;
+            border-radius: 13px;
+            padding: 14px;
+            margin-top: 11px;
+        }
+
+        .appointment-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .appointment-doctor {
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .appointment-specialty {
+            color: #7b8497;
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        .appointment-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 11px;
+        }
+
+        .meta-pill {
+            padding: 6px 9px;
+            background: #f8fafc;
+            color: #64748b;
+            border-radius: 8px;
+            font-size: 10px;
+        }
+
+        .alert {
+            padding: 13px;
+            border-radius: 12px;
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .alert-high {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-medium {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+        }
+
+        .alert-low {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+        }
+
+        .alert-title {
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .alert-text {
+            color: #6b7280;
+            font-size: 10px;
+            margin-top: 3px;
+            line-height: 1.4;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 15px;
+        }
+
+        .primary-btn,
+        .secondary-btn,
+        .danger-btn {
+            border: none;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 11px;
+            font-weight: 750;
+        }
+
+        .primary-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .secondary-btn {
+            background: #eef2f7;
+            color: #344054;
+        }
+
+        .danger-btn {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .empty {
+            text-align: center;
+            color: #8992a4;
+            padding: 24px 10px;
+            font-size: 11px;
+        }
+
+        .error-message {
+            text-align: center;
+            color: #b91c1c;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 12px;
+            font-size: 11px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 100;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            width: min(600px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 20px;
+            padding: 23px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .modal-header h3 {
+            font-size: 19px;
+        }
+
+        .close-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 9px;
+            background: #f1f5f9;
+        }
+
+        .form-group {
+            margin-top: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 750;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #dce1e9;
+            border-radius: 10px;
+            outline: none;
+            resize: vertical;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #2563eb;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 9px;
+            margin-top: 20px;
+        }
+
+        #toast-container {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            color: white;
+            background: #172033;
+            padding: 12px 16px;
+            border-radius: 11px;
+            font-size: 11px;
+            box-shadow:
+                0 8px 30px rgba(15, 23, 42, 0.18);
+        }
+
+        .toast.success {
+            background: #15803d;
+        }
+
+        .toast.error {
+            background: #b91c1c;
+        }
+
+        @media (max-width: 950px) {
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .two-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 13px 4%;
+            }
+
+            .role-badge {
+                display: none;
+            }
+
+            .container {
+                width: 94%;
+                padding-top: 22px;
+            }
+
+            .welcome h1 {
+                font-size: 23px;
+            }
+
+            .stats-grid {
+                gap: 10px;
+            }
+
+            .card {
+                padding: 16px;
+                border-radius: 15px;
+            }
+
+            .stat-value {
+                font-size: 25px;
+            }
+
+            .doctor-chip span {
+                display: none;
+            }
+
+        }
+
+    
+        .role-switcher { display:flex; align-items:center; gap:3px; padding:4px; background:#f1f5f9; border:1px solid #e2e8f0; border-radius:12px; }
+        .role-switch { color:#64748b; text-decoration:none; font-size:11px; font-weight:800; padding:7px 9px; border-radius:9px; white-space:nowrap; }
+        .role-switch:hover { background:#e2e8f0; color:#172033; }
+        .role-switch.active { background:#2563eb; color:white; box-shadow:0 2px 6px rgba(37,99,235,.18); }
+        @media(max-width:700px){ .role-switch{padding:6px 7px;font-size:10px;} .role-switcher{gap:2px;} }
+</style>
+</head>
+
+
+<body>
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="logo">
+            C
+        </div>
+
+        <div>
+
+            <div class="brand-name">
+                Caretakers
+            </div>
+
+            <div class="brand-subtitle">
+                Connected healthcare
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-right">
+
+        <div class="role-switcher" aria-label="Switch dashboard role">
+            <a href="/" class="role-switch">Patient</a>
+            <a href="/doctor" class="role-switch active">Doctor</a>
+            <a href="/caretaker" class="role-switch">Caretaker</a>
+        </div>
+
+        <div class="role-badge">
+            DOCTOR VIEW
+        </div>
+
+        <div class="doctor-chip">
+
+            <div class="doctor-avatar">
+                DR
+            </div>
+
+            <span>
+                Doctor Dashboard
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="welcome">
+
+        <h1>
+            Doctor Dashboard
+        </h1>
+
+        <p>
+            Review patient health signals, medication adherence,
+            appointments and care alerts.
+        </p>
+
+    </div>
+
+
+    <div class="card" style="margin-bottom:18px;">
+
+        <div class="card-title">
+            Patient
+        </div>
+
+        <div class="card-subtitle">
+            Connected patient information
+        </div>
+
+
+        <div class="patient-row">
+
+            <div class="patient-main">
+
+                <div class="patient-avatar-large">
+                    D
+                </div>
+
+                <div>
+
+                    <div class="patient-name">
+                        Deeptanshu
+                    </div>
+
+                    <div class="patient-details">
+                        Caretakers patient · Health data sharing enabled
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <span class="badge green">
+                Active
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid stats-grid">
+
+        <div class="card stat-card">
+
+            <div class="stat-label">
+                Heart rate
+            </div>
+
+            <div>
+
+                <span id="heart-rate" class="stat-value">
+                    --
+                </span>
+
+                <span class="stat-unit">
+                    BPM
+                </span>
+
+            </div>
+
+            <div id="heart-note" class="stat-note">
+                Loading...
+            </div>
+
+        </div>
+
+
+        <div class="card stat-card">
+
+            <div class="stat-label">
+                SpO₂
+            </div>
+
+            <div>
+
+                <span id="spo2" class="stat-value">
+                    --
+                </span>
+
+                <span class="stat-unit">
+                    %
+                </span>
+
+            </div>
+
+            <div class="stat-note">
+                Latest synced reading
+            </div>
+
+        </div>
+
+
+        <div class="card stat-card">
+
+            <div class="stat-label">
+                Steps today
+            </div>
+
+            <div>
+
+                <span id="steps" class="stat-value">
+                    --
+                </span>
+
+            </div>
+
+            <div class="stat-note">
+                Daily activity
+            </div>
+
+        </div>
+
+
+        <div class="card stat-card">
+
+            <div class="stat-label">
+                Calories
+            </div>
+
+            <div>
+
+                <span id="calories" class="stat-value">
+                    --
+                </span>
+
+                <span class="stat-unit">
+                    kcal
+                </span>
+
+            </div>
+
+            <div class="stat-note">
+                Estimated today
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid two-grid">
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Medication adherence
+            </div>
+
+            <div class="card-subtitle">
+                Patient medication-taking pattern
+            </div>
+
+
+            <div id="adherence-value" class="adherence-number">
+                --
+            </div>
+
+
+            <div class="progress-track">
+
+                <div
+                    id="adherence-bar"
+                    class="progress-bar"
+                ></div>
+
+            </div>
+
+
+            <div id="adherence-status" class="adherence-text">
+                Loading...
+            </div>
+
+
+            <div id="medication-summary" class="adherence-text">
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="primary-btn"
+                    onclick="showMedicationReport()"
+                >
+                    View adherence report
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Clinical alerts
+            </div>
+
+            <div class="card-subtitle">
+                Events requiring review
+            </div>
+
+
+            <div id="alerts-list">
+
+                <div class="empty">
+                    Loading alerts...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid two-grid">
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Medication schedule
+            </div>
+
+            <div class="card-subtitle">
+                Current medication information
+            </div>
+
+
+            <div id="medication-list" class="med-list">
+
+                <div class="empty">
+                    Loading medications...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Medication history
+            </div>
+
+            <div class="card-subtitle">
+                Recent Taken / Missed records
+            </div>
+
+
+            <div id="medication-history" class="history-list">
+
+                <div class="empty">
+                    Loading history...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card" style="margin-bottom:18px;">
+
+        <div class="card-title">
+            Appointments
+        </div>
+
+        <div class="card-subtitle">
+            Patient consultations
+        </div>
+
+
+        <div id="appointment-list">
+
+            <div class="empty">
+                Loading appointments...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid two-grid">
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Clinical notes
+            </div>
+
+            <div class="card-subtitle">
+                Add a note for the patient's care record.
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="primary-btn"
+                    onclick="openClinicalNote()"
+                >
+                    Add clinical note
+                </button>
+
+            </div>
+
+        </div>
+
+
+        
+            <div
+                id="clinical-notes-list"
+                style="margin-top:16px;"
+            >
+                <div class="empty">
+                    Loading clinical notes...
+                </div>
+            </div>
+
+<div class="card">
+
+            <div class="card-title">
+                Patient communication
+            </div>
+
+            <div class="card-subtitle">
+                Contact the patient through Caretakers.
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="secondary-btn"
+                    onclick="openPatientMessage()"
+                >
+                    💬 Message patient
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<div
+    id="modal-overlay"
+    class="modal-overlay"
+    onclick="closeModalOnOverlay(event)"
+>
+
+    <div
+        id="modal"
+        class="modal"
+    ></div>
+
+</div>
+
+
+<div id="toast-container"></div>
+
+
+<script>
+
+"use strict";
+
+
+/* ============================================================
+   BASIC HELPERS
+   ============================================================ */
+
+function $(id) {
+    return document.getElementById(id);
+}
+
+
+/*
+ * API helper.
+ *
+ * IMPORTANT:
+ * The old version assumed every backend response was JSON.
+ * This version safely handles JSON and non-JSON responses and
+ * also stops waiting forever if an endpoint does not respond.
+ */
+
+async function api(url, options = {}) {
+
+    const controller = new AbortController();
+
+    const timeout = setTimeout(() => {
+        controller.abort();
+    }, 8000);
+
+
+    try {
+
+        const response = await fetch(
+            url,
+            {
+                ...options,
+
+                signal: controller.signal,
+
+                headers: {
+                    ...(options.body
+                        ? {
+                            "Content-Type":
+                                "application/json"
+                        }
+                        : {})
+                }
+            }
+        );
+
+
+        const contentType =
+            response.headers.get(
+                "content-type"
+            ) || "";
+
+
+        let data;
+
+
+        if (
+            contentType.includes(
+                "application/json"
+            )
+        ) {
+
+            data = await response.json();
+
+        } else {
+
+            const text =
+                await response.text();
+
+            data =
+                text
+                    ? { message: text }
+                    : {};
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                data.message ||
+                `Request failed (${response.status})`
+            );
+        }
+
+
+        return data;
+
+    } catch (error) {
+
+        if (
+            error.name ===
+            "AbortError"
+        ) {
+
+            throw new Error(
+                `${url} timed out after 8 seconds`
+            );
+        }
+
+
+        throw error;
+
+    } finally {
+
+        clearTimeout(timeout);
+
+    }
+}
+
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function showToast(
+    message,
+    type = "success"
+) {
+
+    const container =
+        $("toast-container");
+
+    const toast =
+        document.createElement(
+            "div"
+        );
+
+    toast.className =
+        `toast ${type}`;
+
+    toast.textContent =
+        message;
+
+    container.appendChild(
+        toast
+    );
+
+    setTimeout(
+        () => toast.remove(),
+        3500
+    );
+}
+
+
+/*
+ * Converts many possible backend response formats
+ * into an array.
+ *
+ * This is important because your backend might return:
+ *
+ * [...]
+ *
+ * OR
+ *
+ * { medications: [...] }
+ *
+ * OR
+ *
+ * { data: [...] }
+ *
+ * OR
+ *
+ * { data: { medications: [...] } }
+ */
+
+function getArray(
+    data,
+    possibleKeys = []
+) {
+
+    if (Array.isArray(data)) {
+        return data;
+    }
+
+
+    if (!data || typeof data !== "object") {
+        return [];
+    }
+
+
+    for (
+        const key of possibleKeys
+    ) {
+
+        if (
+            Array.isArray(
+                data[key]
+            )
+        ) {
+
+            return data[key];
+        }
+    }
+
+
+    if (
+        data.data &&
+        Array.isArray(data.data)
+    ) {
+
+        return data.data;
+    }
+
+
+    if (
+        data.data &&
+        typeof data.data === "object"
+    ) {
+
+        for (
+            const key of possibleKeys
+        ) {
+
+            if (
+                Array.isArray(
+                    data.data[key]
+                )
+            ) {
+
+                return data.data[key];
+            }
+        }
+    }
+
+
+    if (
+        data.result &&
+        Array.isArray(data.result)
+    ) {
+
+        return data.result;
+    }
+
+
+    return [];
+}
+
+
+/* ============================================================
+   HEALTH
+   ============================================================ */
+
+async function loadHealth() {
+
+    try {
+
+        const health =
+            await api(
+                "/api/health"
+            );
+
+
+        const source =
+            health.data &&
+            typeof health.data === "object"
+                ? health.data
+                : health;
+
+
+        $("heart-rate").textContent =
+            source.heart_rate ??
+            source.heartRate ??
+            "--";
+
+
+        $("spo2").textContent =
+            source.spo2 ??
+            source.SpO2 ??
+            source.spo_2 ??
+            "--";
+
+
+        const steps =
+            source.steps ??
+            source.steps_today ??
+            source.stepsToday;
+
+
+        $("steps").textContent =
+            steps != null
+                ? Number(
+                    steps
+                ).toLocaleString()
+                : "--";
+
+
+        $("calories").textContent =
+            source.calories ??
+            source.calories_today ??
+            source.caloriesToday ??
+            "--";
+
+
+        $("heart-note").textContent =
+            "Latest synced reading";
+
+
+    } catch (error) {
+
+        console.error(
+            "Health error:",
+            error
+        );
+
+        $("heart-note").textContent =
+            "Unable to load health data";
+
+    }
+}
+
+
+/* ============================================================
+   MEDICATIONS
+   ============================================================ */
+
+async function loadMedications() {
+
+    const medicationContainer =
+        $("medication-list");
+
+    const historyContainer =
+        $("medication-history");
+
+
+    try {
+
+        const data =
+            await api(
+                "/api/medications"
+            );
+
+
+        console.log(
+            "Medication API response:",
+            data
+        );
+
+
+        /*
+         * Support multiple backend response formats.
+         */
+
+        const medications =
+            getArray(
+                data,
+                [
+                    "medications",
+                    "meds",
+                    "items"
+                ]
+            );
+
+
+        const log =
+            getArray(
+                data,
+                [
+                    "log",
+                    "history",
+                    "medication_history",
+                    "medicationHistory",
+                    "records",
+                    "logs"
+                ]
+            );
+
+
+        /*
+         * Some backends may return medication logs
+         * under data.log or data.history.
+         */
+
+        let finalLog = log;
+
+
+        if (
+            !finalLog.length &&
+            data.data &&
+            typeof data.data === "object"
+        ) {
+
+            finalLog =
+                getArray(
+                    data.data,
+                    [
+                        "log",
+                        "history",
+                        "medication_history",
+                        "medicationHistory",
+                        "records",
+                        "logs"
+                    ]
+                );
+        }
+
+
+        renderMedications(
+            medications,
+            finalLog
+        );
+
+
+        renderHistory(
+            finalLog
+        );
+
+
+        /*
+         * Use backend report if available.
+         */
+
+        let report =
+            data.report ||
+            data.adherence_report ||
+            data.adherenceReport;
+
+
+        if (
+            !report &&
+            data.data &&
+            typeof data.data === "object"
+        ) {
+
+            report =
+                data.data.report ||
+                data.data.adherence_report ||
+                data.data.adherenceReport;
+        }
+
+
+        /*
+         * If backend doesn't send report,
+         * calculate it from the log.
+         */
+
+        if (!report) {
+
+            report =
+                calculateAdherence(
+                    finalLog
+                );
+        }
+
+
+        updateAdherence(
+            report
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Medication API error:",
+            error
+        );
+
+
+        medicationContainer.innerHTML =
+            `
+            <div class="error-message">
+                Unable to load medications.<br>
+                ${escapeHtml(error.message)}
+            </div>
+            `;
+
+
+        historyContainer.innerHTML =
+            `
+            <div class="error-message">
+                Unable to load medication history.<br>
+                ${escapeHtml(error.message)}
+            </div>
+            `;
+
+
+        $("adherence-value").textContent =
+            "--";
+
+
+        $("adherence-status").textContent =
+            "Medication data unavailable";
+
+    }
+}
+
+
+/* ============================================================
+   MEDICATION NORMALIZATION
+   ============================================================ */
+
+function getMedicationName(
+    medication
+) {
+
+    return (
+        medication.name ||
+        medication.medication ||
+        medication.medication_name ||
+        medication.medicine ||
+        medication.medicine_name ||
+        "Medication"
+    );
+}
+
+
+function getMedicationId(
+    medication
+) {
+
+    return (
+        medication.id ??
+        medication.medication_id ??
+        medication.medicationId ??
+        null
+    );
+}
+
+
+function getStatus(
+    entry
+) {
+
+    return String(
+        entry.status ||
+        entry.state ||
+        ""
+    ).trim();
+}
+
+
+/* ============================================================
+   MEDICATION LIST
+   ============================================================ */
+
+function renderMedications(
+    medications,
+    log
+) {
+
+    const container =
+        $("medication-list");
+
+
+    if (!medications.length) {
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                No medications available.
+            </div>
+            `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        medications.map(
+            medication => {
+
+                const medicationId =
+                    getMedicationId(
+                        medication
+                    );
+
+
+                const latest =
+                    log.find(
+                        item => {
+
+                            const logId =
+                                item.medication_id ??
+                                item.medicationId ??
+                                item.med_id ??
+                                item.medId;
+
+
+                            return (
+                                medicationId != null &&
+                                logId != null &&
+                                Number(logId) ===
+                                Number(medicationId)
+                            );
+                        }
+                    );
+
+
+                let status =
+                    "Pending";
+
+                let className =
+                    "yellow";
+
+
+                const latestStatus =
+                    latest
+                        ? getStatus(latest)
+                        : "";
+
+
+                if (
+                    latestStatus.toLowerCase()
+                        === "taken"
+                ) {
+
+                    status =
+                        "Taken";
+
+                    className =
+                        "green";
+
+                } else if (
+                    latestStatus.toLowerCase()
+                        === "missed"
+                ) {
+
+                    status =
+                        "Missed";
+
+                    className =
+                        "red";
+                }
+
+
+                const name =
+                    getMedicationName(
+                        medication
+                    );
+
+
+                const dosage =
+                    medication.dosage ||
+                    medication.dose ||
+                    "";
+
+
+                const time =
+                    medication.time ||
+                    medication.scheduled_time ||
+                    medication.scheduledTime ||
+                    "";
+
+
+                const frequency =
+                    medication.frequency ||
+                    medication.freq ||
+                    "";
+
+
+                const details =
+                    [
+                        dosage,
+                        time,
+                        frequency
+                    ]
+                    .filter(Boolean)
+                    .join(" · ");
+
+
+                return `
+
+                    <div class="med-item">
+
+                        <div class="med-main">
+
+                            <div class="med-icon">
+                                💊
+                            </div>
+
+                            <div>
+
+                                <div class="med-name">
+                                    ${escapeHtml(name)}
+                                </div>
+
+                                <div class="med-details">
+                                    ${
+                                        escapeHtml(
+                                            details ||
+                                            "Medication schedule"
+                                        )
+                                    }
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <span
+                            class="badge ${className}"
+                        >
+                            ${status}
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+}
+
+
+/* ============================================================
+   MEDICATION HISTORY
+   ============================================================ */
+
+function renderHistory(
+    log
+) {
+
+    const container =
+        $("medication-history");
+
+
+    if (!log.length) {
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                No medication history.
+            </div>
+            `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        log
+            .slice(0, 30)
+            .map(entry => {
+
+                const status =
+                    getStatus(entry);
+
+
+                const taken =
+                    status.toLowerCase()
+                        === "taken";
+
+
+                const medicine =
+                    entry.medicine ||
+                    entry.medicine_name ||
+                    entry.medication ||
+                    entry.medication_name ||
+                    entry.name ||
+                    "Medication";
+
+
+                const date =
+                    entry.date ||
+                    entry.taken_date ||
+                    entry.scheduled_date ||
+                    entry.scheduledDate ||
+                    "";
+
+
+                const recordedAt =
+                    entry.recorded_at ||
+                    entry.recordedAt ||
+                    entry.time ||
+                    entry.taken_at ||
+                    entry.takenAt ||
+                    "";
+
+
+                return `
+
+                    <div class="history-row">
+
+                        <div class="history-left">
+
+                            <div class="history-icon">
+                                ${
+                                    taken
+                                    ? "✓"
+                                    : "⚠️"
+                                }
+                            </div>
+
+                            <div>
+
+                                <div class="history-name">
+                                    ${escapeHtml(
+                                        medicine
+                                    )}
+                                </div>
+
+                                <div class="history-time">
+                                    ${escapeHtml(
+                                        date
+                                    )}
+                                    ${
+                                        date &&
+                                        recordedAt
+                                            ? " · "
+                                            : ""
+                                    }
+                                    ${escapeHtml(
+                                        recordedAt
+                                    )}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <span
+                            class="badge ${
+                                taken
+                                    ? "green"
+                                    : "red"
+                            }"
+                        >
+                            ${escapeHtml(
+                                status ||
+                                "Recorded"
+                            )}
+                        </span>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+}
+
+
+/* ============================================================
+   CALCULATE ADHERENCE IF BACKEND DOES NOT SEND REPORT
+   ============================================================ */
+
+function calculateAdherence(
+    log
+) {
+
+    let taken = 0;
+    let missed = 0;
+    let pending = 0;
+
+
+    log.forEach(
+        entry => {
+
+            const status =
+                getStatus(
+                    entry
+                ).toLowerCase();
+
+
+            if (
+                status === "taken"
+            ) {
+
+                taken++;
+
+            } else if (
+                status === "missed"
+            ) {
+
+                missed++;
+
+            } else {
+
+                pending++;
+            }
+
+        }
+    );
+
+
+    const completed =
+        taken + missed;
+
+
+    const adherence =
+        completed > 0
+            ? Math.round(
+                (taken / completed) * 100
+            )
+            : 0;
+
+
+    let status =
+        "No medication data";
+
+
+    if (
+        completed > 0
+    ) {
+
+        if (
+            adherence >= 80
+        ) {
+
+            status =
+                "Good adherence";
+
+        } else if (
+            adherence >= 60
+        ) {
+
+            status =
+                "Needs attention";
+
+        } else {
+
+            status =
+                "Poor adherence";
+        }
+    }
+
+
+    return {
+        adherence,
+        taken,
+        missed,
+        pending,
+        status
+    };
+}
+
+
+/* ============================================================
+   UPDATE ADHERENCE
+   ============================================================ */
+
+function updateAdherence(
+    report
+) {
+
+    if (!report) {
+
+        return;
+    }
+
+
+    const adherence =
+        Number(
+            report.adherence ??
+            report.percentage ??
+            report.rate ??
+            0
+        );
+
+
+    const safeAdherence =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                adherence
+            )
+        );
+
+
+    $("adherence-value").textContent =
+        `${safeAdherence}%`;
+
+
+    $("adherence-bar").style.width =
+        `${safeAdherence}%`;
+
+
+    $("adherence-status").textContent =
+        report.status ||
+        (
+            safeAdherence >= 80
+                ? "Good adherence"
+                : safeAdherence >= 60
+                    ? "Needs attention"
+                    : "Poor adherence"
+        );
+
+
+    const taken =
+        report.taken ??
+        report.taken_count ??
+        0;
+
+
+    const missed =
+        report.missed ??
+        report.missed_count ??
+        0;
+
+
+    const pending =
+        report.pending ??
+        report.pending_count ??
+        0;
+
+
+    $("medication-summary").textContent =
+        `${taken} taken · ` +
+        `${missed} missed · ` +
+        `${pending} pending doses`;
+}
+
+
+/* ============================================================
+   FULL MEDICATION REPORT
+   ============================================================ */
+
+async function showMedicationReport() {
+
+    try {
+
+        const result =
+            await api(
+                "/api/medications/report"
+            );
+
+
+        const report =
+            result.report ||
+            result.data?.report ||
+            result;
+
+
+        openModal(`
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h3>
+                        Medication adherence report
+                    </h3>
+
+                    <div
+                        style="
+                            color:#7b8497;
+                            font-size:11px;
+                            margin-top:4px;
+                        "
+                    >
+                        Patient medication history
+                    </div>
+
+                </div>
+
+                <button
+                    class="close-btn"
+                    onclick="closeModal()"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <div
+                style="
+                    text-align:center;
+                    padding:10px 0 20px;
+                "
+            >
+
+                <div
+                    style="
+                        font-size:48px;
+                        font-weight:850;
+                    "
+                >
+                    ${escapeHtml(
+                        report.adherence ??
+                        report.percentage ??
+                        0
+                    )}%
+                </div>
+
+                <div
+                    style="
+                        color:#7b8497;
+                        font-size:12px;
+                    "
+                >
+                    ${escapeHtml(
+                        report.status ||
+                        "Medication adherence"
+                    )}
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        repeat(3,1fr);
+                    gap:10px;
+                "
+            >
+
+                <div
+                    style="
+                        padding:14px;
+                        background:#f0fdf4;
+                        border-radius:12px;
+                        text-align:center;
+                    "
+                >
+
+                    <strong>
+                        ${escapeHtml(
+                            report.taken ?? 0
+                        )}
+                    </strong>
+
+                    <div
+                        style="
+                            color:#15803d;
+                            font-size:10px;
+                            margin-top:4px;
+                        "
+                    >
+                        Taken
+                    </div>
+
+                </div>
+
+
+                <div
+                    style="
+                        padding:14px;
+                        background:#fef2f2;
+                        border-radius:12px;
+                        text-align:center;
+                    "
+                >
+
+                    <strong>
+                        ${escapeHtml(
+                            report.missed ?? 0
+                        )}
+                    </strong>
+
+                    <div
+                        style="
+                            color:#b91c1c;
+                            font-size:10px;
+                            margin-top:4px;
+                        "
+                    >
+                        Missed
+                    </div>
+
+                </div>
+
+
+                <div
+                    style="
+                        padding:14px;
+                        background:#fffbeb;
+                        border-radius:12px;
+                        text-align:center;
+                    "
+                >
+
+                    <strong>
+                        ${escapeHtml(
+                            report.pending ?? 0
+                        )}
+                    </strong>
+
+                    <div
+                        style="
+                            color:#a16207;
+                            font-size:10px;
+                            margin-top:4px;
+                        "
+                    >
+                        Pending
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                    margin-top:18px;
+                    padding:13px;
+                    border-radius:11px;
+                    background:#f8fafc;
+                    color:#64748b;
+                    font-size:11px;
+                    line-height:1.5;
+                "
+            >
+                This dashboard is intended to support
+                clinical review. Medication adherence data
+                should be interpreted together with the
+                patient's clinical context.
+            </div>
+
+        `);
+
+    } catch (error) {
+
+        console.error(
+            "Report error:",
+            error
+        );
+
+        showToast(
+            "Unable to load adherence report",
+            "error"
+        );
+    }
+}
+
+
+/* ============================================================
+   ALERTS
+   ============================================================ */
+
+async function loadAlerts() {
+
+    try {
+
+        const alertsData =
+            await api(
+                "/api/alerts"
+            );
+
+
+        const alerts =
+            getArray(
+                alertsData,
+                [
+                    "alerts",
+                    "items",
+                    "data"
+                ]
+            );
+
+
+        renderAlerts(
+            alerts
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Alerts error:",
+            error
+        );
+
+
+        $("alerts-list").innerHTML =
+            `
+            <div class="error-message">
+                Unable to load alerts.
+            </div>
+            `;
+    }
+}
+
+
+function renderAlerts(
+    alerts
+) {
+
+    const container =
+        $("alerts-list");
+
+
+    if (!alerts.length) {
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                No active alerts.
+            </div>
+            `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        alerts
+            .slice(0, 8)
+            .map(alert => {
+
+                let className =
+                    "alert-low";
+
+                let icon =
+                    "ℹ️";
+
+
+                if (
+                    alert.severity === "high" ||
+                    alert.type === "emergency"
+                ) {
+
+                    className =
+                        "alert-high";
+
+                    icon =
+                        "🚨";
+
+                } else if (
+                    alert.severity === "medium"
+                ) {
+
+                    className =
+                        "alert-medium";
+
+                    icon =
+                        "⚠️";
+                }
+
+
+                return `
+
+                    <div class="alert ${className}">
+
+                        <div>
+                            ${icon}
+                        </div>
+
+                        <div>
+
+                            <div class="alert-title">
+                                ${escapeHtml(
+                                    alert.title ||
+                                    alert.type ||
+                                    "Alert"
+                                )}
+                            </div>
+
+                            <div class="alert-text">
+                                ${escapeHtml(
+                                    alert.message ||
+                                    alert.description ||
+                                    ""
+                                )}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+}
+
+
+/* ============================================================
+   APPOINTMENTS
+   ============================================================ */
+
+async function loadAppointments() {
+
+    const container =
+        $("appointment-list");
+
+
+    try {
+
+        const data =
+            await api(
+                "/api/appointments"
+            );
+
+
+        console.log(
+            "Appointments API response:",
+            data
+        );
+
+
+        /*
+         * Support:
+         *
+         * [...]
+         *
+         * { appointments: [...] }
+         *
+         * { data: [...] }
+         *
+         * { data: { appointments: [...] } }
+         */
+
+        const appointments =
+            getArray(
+                data,
+                [
+                    "appointments",
+                    "appointment",
+                    "items",
+                    "records"
+                ]
+            );
+
+
+        renderAppointments(
+            appointments
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Appointments API error:",
+            error
+        );
+
+
+        container.innerHTML =
+            `
+            <div class="error-message">
+                Unable to load appointments.<br>
+                ${escapeHtml(
+                    error.message
+                )}
+            </div>
+            `;
+    }
+}
+
+
+/* ============================================================
+   APPOINTMENT FIELD HELPERS
+   ============================================================ */
+
+function appointmentValue(
+    appointment,
+    keys
+) {
+
+    for (
+        const key of keys
+    ) {
+
+        if (
+            appointment[key] !== undefined &&
+            appointment[key] !== null &&
+            appointment[key] !== ""
+        ) {
+
+            return appointment[key];
+        }
+    }
+
+
+    return "";
+}
+
+
+/* ============================================================
+   RENDER APPOINTMENTS
+   ============================================================ */
+
+function renderAppointments(appointments) {
+
+    const container = $("appointment-list");
+
+    if (!appointments.length) {
+        container.innerHTML = `
+            <div class="empty">
+                No appointments scheduled.
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = appointments.map(appointment => {
+
+        const doctor =
+            appointmentValue(
+                appointment,
+                [
+                    "doctor",
+                    "doctor_name",
+                    "doctorName",
+                    "physician",
+                    "name"
+                ]
+            ) || "Doctor";
+
+        const specialty =
+            appointmentValue(
+                appointment,
+                [
+                    "specialty",
+                    "speciality",
+                    "doctor_specialty",
+                    "doctorSpecialty"
+                ]
+            ) || "Consultation";
+
+        const date =
+            appointmentValue(
+                appointment,
+                [
+                    "date",
+                    "appointment_date",
+                    "appointmentDate"
+                ]
+            );
+
+        const time =
+            appointmentValue(
+                appointment,
+                [
+                    "time",
+                    "appointment_time",
+                    "appointmentTime"
+                ]
+            );
+
+        const mode =
+            appointmentValue(
+                appointment,
+                [
+                    "mode",
+                    "type",
+                    "appointment_type",
+                    "appointmentType"
+                ]
+            );
+
+        const status =
+            appointmentValue(
+                appointment,
+                [
+                    "status",
+                    "state"
+                ]
+            ) || "Booked";
+
+        const reason =
+            appointmentValue(
+                appointment,
+                [
+                    "reason",
+                    "purpose",
+                    "description"
+                ]
+            );
+
+        const modeLower =
+            String(mode).toLowerCase();
+
+        const modeDisplay =
+            (
+                modeLower.includes("online") ||
+                modeLower.includes("video") ||
+                modeLower.includes("tele")
+            )
+                ? "💻 Online"
+                : "🏥 Hospital";
+
+        const statusLower =
+            String(status).toLowerCase();
+
+        let statusClass = "green";
+
+        if (statusLower === "requested") {
+            statusClass = "yellow";
+        } else if (statusLower === "rejected") {
+            statusClass = "red";
+        }
+
+        const actionButtons =
+            statusLower === "requested"
+                ? `
+                    <div style="
+                        display:flex;
+                        gap:8px;
+                        margin-top:14px;
+                    ">
+                        <button
+                            class="primary-btn"
+                            style="flex:1; cursor:pointer;"
+                            onclick="updateAppointmentStatus(${JSON.stringify(appointment.id)}, 'Confirmed')"
+                        >
+                            ✓ Confirm
+                        </button>
+
+                        <button
+                            class="secondary-btn"
+                            style="flex:1; cursor:pointer;"
+                            onclick="updateAppointmentStatus(${JSON.stringify(appointment.id)}, 'Rejected')"
+                        >
+                            ✕ Reject
+                        </button>
+                    </div>
+                `
+                : "";
+
+        return `
+            <div class="appointment">
+
+                <div class="appointment-top">
+
+                    <div>
+                        <div class="appointment-doctor">
+                            ${escapeHtml(doctor)}
+                        </div>
+
+                        <div class="appointment-specialty">
+                            ${escapeHtml(specialty)}
+                        </div>
+                    </div>
+
+                    <span class="badge ${statusClass}">
+                        ${escapeHtml(status)}
+                    </span>
+
+                </div>
+
+                <div class="appointment-meta">
+
+                    <span class="meta-pill">
+                        📅 ${escapeHtml(
+                            date || "Date not available"
+                        )}
+                    </span>
+
+                    <span class="meta-pill">
+                        🕐 ${escapeHtml(
+                            time || "Time not available"
+                        )}
+                    </span>
+
+                    <span class="meta-pill">
+                        ${modeDisplay}
+                    </span>
+
+                </div>
+
+                ${
+                    reason
+                    ? `
+                        <div style="
+                            color:#7b8497;
+                            font-size:10px;
+                            margin-top:10px;
+                        ">
+                            Reason:
+                            ${escapeHtml(reason)}
+                        </div>
+                    `
+                    : ""
+                }
+
+                ${actionButtons}
+
+            </div>
+        `;
+
+    }).join("");
+}
+
+
+/* ============================================================
+   APPOINTMENT STATUS ACTION
+   ============================================================ */
+
+async function updateAppointmentStatus(
+    appointmentId,
+    status
+) {
+
+    try {
+
+        const response =
+            await api(
+                `/api/appointments/${appointmentId}/status`,
+                {
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        status: status
+                    })
+                }
+            );
+
+        console.log(
+            "Appointment status updated:",
+            response
+        );
+
+        showToast(
+            status === "Confirmed"
+                ? "Appointment confirmed ✓"
+                : "Appointment rejected"
+        );
+
+        await loadAppointments();
+
+    } catch (error) {
+
+        console.error(
+            "Appointment status update failed:",
+            error
+        );
+
+        showToast(
+            "Could not update appointment"
+        );
+    }
+}
+
+
+async function loadClinicalNotes() {
+
+    const container =
+        $("clinical-notes-list");
+
+    if (!container) return;
+
+    try {
+
+        const data =
+            await api("/api/clinical-notes");
+
+        const notes =
+            Array.isArray(data.notes)
+                ? data.notes
+                : [];
+
+        if (!notes.length) {
+
+            container.innerHTML = `
+                <div class="empty">
+                    No clinical notes yet.
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML =
+            notes
+                .slice(0, 6)
+                .map(note => `
+                    <div
+                        style="
+                            border:1px solid #e5e7eb;
+                            border-radius:14px;
+                            padding:12px;
+                            margin-bottom:10px;
+                            background:#ffffff;
+                        "
+                    >
+                        <div
+                            style="
+                                display:flex;
+                                justify-content:space-between;
+                                gap:10px;
+                                margin-bottom:6px;
+                            "
+                        >
+                            <strong>
+                                ${escapeHtml(
+                                    note.doctor ||
+                                    "Doctor"
+                                )}
+                            </strong>
+
+                            <span
+                                style="
+                                    color:#7b8497;
+                                    font-size:11px;
+                                    white-space:nowrap;
+                                "
+                            >
+                                ${escapeHtml(
+                                    note.created_at ||
+                                    ""
+                                )}
+                            </span>
+                        </div>
+
+                        <div
+                            style="
+                                color:#4b5563;
+                                font-size:13px;
+                                line-height:1.5;
+                            "
+                        >
+                            ${escapeHtml(
+                                note.note || ""
+                            )}
+                        </div>
+                    </div>
+                `)
+                .join("");
+
+    } catch (error) {
+
+        console.error(
+            "Clinical notes loading failed:",
+            error
+        );
+
+        container.innerHTML = `
+            <div class="empty">
+                Could not load clinical notes.
+            </div>
+        `;
+    }
+}
+
+
+function openClinicalNote() {
+
+    openModal(`
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3>
+                    Add clinical note
+                </h3>
+
+                <div
+                    style="
+                        color:#7b8497;
+                        font-size:11px;
+                        margin-top:4px;
+                    "
+                >
+                    Add a note for the patient's care workflow.
+                </div>
+
+            </div>
+
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Note
+            </label>
+
+            <textarea
+                id="clinical-note"
+                placeholder="Enter clinical observation..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="secondary-btn"
+                onclick="closeModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="primary-btn"
+                onclick="saveClinicalNote()"
+            >
+                Save note
+            </button>
+
+        </div>
+
+    `);
+}
+
+
+async function saveClinicalNote() {
+
+    const note =
+        $("clinical-note")
+            ?.value
+            .trim();
+
+    if (!note) {
+        showToast(
+            "Enter a clinical note",
+            "error"
+        );
+        return;
+    }
+
+    try {
+
+        await api(
+            "/api/clinical-notes",
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    note: note
+                })
+            }
+        );
+
+        closeModal();
+
+        showToast(
+            "Clinical note saved ✓",
+            "success"
+        );
+
+        await loadClinicalNotes();
+
+    } catch (error) {
+
+        console.error(
+            "Clinical note save failed:",
+            error
+        );
+
+        showToast(
+            "Could not save clinical note",
+            "error"
+        );
+    }
+}
+
+
+function openPatientMessage() {
+
+    openModal(`
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3>
+                    Message patient
+                </h3>
+
+                <div
+                    style="
+                        color:#7b8497;
+                        font-size:11px;
+                        margin-top:4px;
+                    "
+                >
+                    Send a care-team message.
+                </div>
+
+            </div>
+
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Message
+            </label>
+
+            <textarea
+                id="patient-message"
+                placeholder="Write your message..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="secondary-btn"
+                onclick="closeModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="primary-btn"
+                onclick="sendPatientMessage()"
+            >
+                Send
+            </button>
+
+        </div>
+
+    `);
+}
+
+
+async function sendPatientMessage() {
+
+    const message =
+        $("patient-message")
+            ?.value
+            .trim();
+
+    if (!message) {
+        showToast(
+            "Enter a message",
+            "error"
+        );
+        return;
+    }
+
+    try {
+
+        await api(
+            "/api/patient-messages",
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    message: message
+                })
+            }
+        );
+
+        closeModal();
+
+        showToast(
+            "Message sent to patient ✓",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Patient message failed:",
+            error
+        );
+
+        showToast(
+            "Could not send message",
+            "error"
+        );
+    }
+}
+
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+function openModal(
+    html
+) {
+
+    const overlay =
+        $("modal-overlay");
+
+    const modal =
+        $("modal");
+
+
+    modal.innerHTML =
+        html;
+
+
+    overlay.classList.add(
+        "open"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+}
+
+
+function closeModal() {
+
+    $("modal-overlay")
+        .classList.remove(
+            "open"
+        );
+
+
+    $("modal").innerHTML =
+        "";
+
+
+    document.body.style.overflow =
+        "";
+}
+
+
+function closeModalOnOverlay(
+    event
+) {
+
+    if (
+        event.target ===
+        $("modal-overlay")
+    ) {
+
+        closeModal();
+    }
+}
+
+
+/* ============================================================
+   INITIALIZATION
+   ============================================================ */
+
+async function loadDashboard() {
+
+    await Promise.allSettled([
+
+        loadHealth(),
+
+        loadMedications(),
+
+        loadAlerts(),
+
+        loadAppointments(),
+
+        loadClinicalNotes()
+
+    ]);
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        loadDashboard();
+
+    }
+);
+
+
+/*
+ * Refresh dashboard every 15 seconds.
+ */
+
+setInterval(
+    () => {
+
+        loadHealth();
+
+        loadMedications();
+
+        loadAlerts();
+        if (window.loadCaretakersRisk) loadCaretakersRisk();
+
+        loadAppointments();
+
+        loadClinicalNotes();
+
+    },
+    15000
+);
+
+</script>
+
+<style>
+.caretakers-ai-feature{margin:28px auto;max-width:1180px;background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:24px;box-shadow:0 10px 30px rgba(15,23,42,.06)}
+.caretakers-ai-feature h2{margin:0 0 8px;font-size:24px;font-weight:800;color:#172033}.caretakers-ai-feature p{color:#64748b;margin:0 0 18px;line-height:1.55}
+.caretakers-ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.caretakers-ai-panel{border:1px solid #e2e8f0;border-radius:18px;padding:20px;background:#f8fafc}.caretakers-ai-panel#caretakers-add-medicine-panel{grid-column:1/-1;padding:26px;min-height:270px}.caretakers-ai-panel h3{margin:0 0 8px;font-size:17px;font-weight:750;color:#1e293b}.caretakers-ai-btn{border:0;border-radius:12px;padding:11px 15px;background:#2563eb;color:white;font-weight:700}.caretakers-ai-btn.secondary{background:#0f766e}.caretakers-ai-btn:disabled{opacity:.55;cursor:not-allowed}.caretakers-upload{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.caretakers-upload input[type=file]{max-width:100%}.caretakers-risk{display:none}.caretakers-risk img{width:100%;max-height:420px;object-fit:cover;border-radius:16px;border:1px solid #e2e8f0}.caretakers-risk-meta{margin-top:10px;font-size:14px;color:#64748b}.caretakers-prescription-list{display:flex;flex-direction:column;gap:9px;margin-top:12px}.caretakers-file{padding:11px 12px;border-radius:12px;background:white;border:1px solid #e5e7eb;display:flex;justify-content:space-between;gap:12px;align-items:center}.caretakers-file a{color:#2563eb;font-weight:700;text-decoration:none}.caretakers-med-form{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}.caretakers-med-form input{padding:13px 14px;border:1px solid #d1d5db;border-radius:10px;background:#fff}.caretakers-med-form button{grid-column:1/-1;padding:13px 16px;font-size:15px}
+@media(max-width:800px){.caretakers-ai-grid{grid-template-columns:1fr}.caretakers-ai-panel#caretakers-add-medicine-panel{grid-column:auto}.caretakers-med-form{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.caretakers-med-form{grid-template-columns:1fr}}
+</style>
+
+<section class="caretakers-ai-feature" id="caretakers-ai-feature">
+  <h2>Medication Safety & Prescription Center</h2>
+  <p>Upload a new prescription from the device camera or files. The AI adherence monitor also creates an educational risk visual when medication adherence falls below 75% (critical below 70%).</p>
+  <div class="caretakers-ai-grid">
+    <div class="caretakers-ai-panel">
+      <h3>AI adherence risk visual</h3>
+      <p id="caretakers-risk-message">Checking medication adherence…</p>
+      <div class="caretakers-risk" id="caretakers-risk-box">
+        <img id="caretakers-risk-image" alt="AI medication adherence risk visualization">
+        <div class="caretakers-risk-meta" id="caretakers-risk-meta"></div>
+      </div>
+    </div>
+    <div class="caretakers-ai-panel">
+      <h3>Upload prescription / medicine</h3>
+      <p>On a phone or tablet, the camera option can capture a fresh prescription directly.</p>
+      <div class="caretakers-upload">
+        <input id="caretakers-prescription-file" type="file" accept="image/*,.pdf" capture="environment">
+        <button class="caretakers-ai-btn" type="button" onclick="uploadCaretakersPrescription()">Upload</button>
+      </div>
+      <div id="caretakers-upload-status" class="caretakers-risk-meta"></div>
+    </div>
+    <div class="caretakers-ai-panel" id="caretakers-add-medicine-panel">
+      <h3>Add a prescribed medicine</h3>
+      <p>Doctor or caretaker can add a new medicine after reviewing the uploaded prescription.</p>
+      <div class="caretakers-med-form">
+        <input id="caretakers-med-name" placeholder="Medicine name">
+        <input id="caretakers-med-dose" placeholder="Dosage e.g. 25 mg">
+        <input id="caretakers-med-time" placeholder="Time e.g. 08:00 AM">
+        <input id="caretakers-med-frequency" placeholder="Frequency e.g. Once daily">
+        <button class="caretakers-ai-btn secondary" type="button" onclick="addCaretakersMedicine()">Add medicine</button>
+      </div>
+      <div id="caretakers-med-status" class="caretakers-risk-meta"></div>
+    </div>
+  </div>
+  <div class="caretakers-ai-panel" style="margin-top:18px">
+    <h3>Recent prescription uploads</h3>
+    <div id="caretakers-prescription-list" class="caretakers-prescription-list"></div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const pageRole = "doctor";
+  const addPanel = document.getElementById("caretakers-add-medicine-panel");
+  if (pageRole === "patient" && addPanel) addPanel.style.display = "none";
+
+  window.uploadCaretakersPrescription = async function(){
+    const input = document.getElementById("caretakers-prescription-file");
+    const status = document.getElementById("caretakers-upload-status");
+    if (!input.files.length) { status.textContent = "Choose a prescription first."; return; }
+    const fd = new FormData(); fd.append("prescription", input.files[0]); fd.append("role", pageRole);
+    status.textContent = "Uploading…";
+    try {
+      const r = await fetch("/api/prescriptions", {method:"POST", body:fd});
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || "Upload failed");
+      status.textContent = "Uploaded successfully. The file is now available to the care team.";
+      input.value = ""; loadCaretakersPrescriptions();
+    } catch(e) { status.textContent = e.message; }
+  };
+
+  window.addCaretakersMedicine = async function(){
+    const name = document.getElementById("caretakers-med-name").value.trim();
+    const dosage = document.getElementById("caretakers-med-dose").value.trim();
+    const time = document.getElementById("caretakers-med-time").value.trim();
+    const frequency = document.getElementById("caretakers-med-frequency").value.trim() || "Once daily";
+    const status = document.getElementById("caretakers-med-status");
+    if (!name) { status.textContent = "Enter the medicine name."; return; }
+    status.textContent = "Saving…";
+    try {
+      const r = await fetch("/api/medications", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({name,dosage,time,frequency})});
+      const data = await r.json(); if (!r.ok) throw new Error(data.error || "Could not add medicine");
+      status.textContent = `${data.name} added to the patient's medication plan.`;
+      document.getElementById("caretakers-med-name").value=""; document.getElementById("caretakers-med-dose").value="";
+      document.getElementById("caretakers-med-time").value=""; document.getElementById("caretakers-med-frequency").value="";
+    } catch(e) { status.textContent = e.message; }
+  };
+
+  async function loadCaretakersRisk(){
+    try {
+      const r = await fetch("/api/adherence-risk", {method:"POST"});
+      const d = await r.json();
+      const msg = document.getElementById("caretakers-risk-message");
+      const box = document.getElementById("caretakers-risk-box");
+      if (!d.triggered) { msg.textContent = `Current adherence is ${d.adherence}%. AI risk visualization activates below 75%.`; box.style.display="none"; return; }
+      msg.textContent = d.message || `Adherence is ${d.adherence}%. Review missed doses with the care team.`;
+      box.style.display="block"; document.getElementById("caretakers-risk-image").src=d.url + "?v=" + Date.now();
+      document.getElementById("caretakers-risk-meta").textContent = `${d.provider === "openai" ? "AI-generated educational visual" : "Automatically generated demo educational visual"} at ${d.adherence}% adherence.`;
+    } catch(e) { document.getElementById("caretakers-risk-message").textContent="AI adherence monitor is unavailable right now."; }
+  }
+
+  async function loadCaretakersPrescriptions(){
+    const list=document.getElementById("caretakers-prescription-list"); if(!list) return;
+    try { const r=await fetch("/api/prescriptions"); const d=await r.json();
+      list.innerHTML=(d.prescriptions||[]).slice(0,8).map(x=>`<div class="caretakers-file"><span><strong>${x.uploaded_by}</strong> · ${x.original_name}<br><small>${x.uploaded_at}</small></span><a href="${x.url}" target="_blank" rel="noopener">View</a></div>`).join("") || "<div class='caretakers-risk-meta'>No prescriptions uploaded yet.</div>";
+    } catch(e) { list.textContent="Could not load uploads."; }
+  }
+  window.loadCaretakersRisk = loadCaretakersRisk;
+  window.loadCaretakersPrescriptions = loadCaretakersPrescriptions;
+  document.addEventListener("DOMContentLoaded", ()=>{ loadCaretakersRisk(); loadCaretakersPrescriptions(); });
+})();
+</script>
+
+</body>
+</html>

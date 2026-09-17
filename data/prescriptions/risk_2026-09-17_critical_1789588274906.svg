@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+      <rect width="1200" height="800" rx="36" fill="#f8fafc"/>
+      <rect x="55" y="55" width="1090" height="690" rx="30" fill="white" stroke="#e2e8f0" stroke-width="3"/>
+      <text x="90" y="125" font-family="Arial" font-size="42" font-weight="700" fill="#172033">Medication adherence matters</text>
+      <text x="90" y="175" font-family="Arial" font-size="25" fill="#64748b">Educational AI risk visualization</text>
+      <circle cx="190" cy="330" r="110" fill="#eef2ff"/>
+      <rect x="145" y="260" width="90" height="145" rx="45" fill="#6366f1" transform="rotate(-18 190 330)"/>
+      <text x="340" y="295" font-family="Arial" font-size="31" font-weight="700" fill="#172033">Current adherence: 67%</text>
+      <text x="340" y="345" font-family="Arial" font-size="27" fill="#dc2626">Urgent attention</text>
+      <text x="340" y="400" font-family="Arial" font-size="23" fill="#475569">Repeatedly missing prescribed doses can increase</text>
+      <text x="340" y="435" font-family="Arial" font-size="23" fill="#475569">the risk of symptoms or the underlying condition</text>
+      <text x="340" y="470" font-family="Arial" font-size="23" fill="#475569">becoming harder to control.</text>
+      <rect x="90" y="545" width="1020" height="120" rx="24" fill="#f1f5f9"/>
+      <text x="120" y="595" font-family="Arial" font-size="22" font-weight="700" fill="#334155">Medicines tracked</text>
+      <text x="120" y="632" font-family="Arial" font-size="21" fill="#64748b">Metoprolol, Vitamin D3, Atorvastatin</text>
+      <text x="90" y="705" font-family="Arial" font-size="18" fill="#94a3b8">Illustration is educational, not a prediction or diagnosis.</text>
+    </svg>

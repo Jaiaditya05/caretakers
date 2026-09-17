@@ -1,0 +1,2739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Caretakers — Caretaker</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .app {
+            min-height: 100vh;
+        }
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
+
+        .header {
+            background: white;
+            border-bottom: 1px solid #e8ebf1;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .brand-subtitle {
+            color: #7a8498;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .role-badge {
+            padding: 8px 13px;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .patient-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            background: #f8fafc;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .patient-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #dbeafe;
+            color: #1d4ed8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           MAIN
+           ===================================================== */
+
+        .container {
+            width: min(1250px, 92%);
+            margin: 0 auto;
+            padding: 30px 0 60px;
+        }
+
+        .welcome {
+            margin-bottom: 24px;
+        }
+
+        .welcome h1 {
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+
+        .welcome p {
+            color: #7a8498;
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           CARDS
+           ===================================================== */
+
+        .card {
+            background: white;
+            border: 1px solid #e8ebf1;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow:
+                0 5px 20px rgba(15, 23, 42, 0.04);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .card-subtitle {
+            color: #8a93a5;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+
+        /* =====================================================
+           GRID
+           ===================================================== */
+
+        .grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .stats-grid {
+            grid-template-columns:
+                repeat(4, 1fr);
+            margin-bottom: 18px;
+        }
+
+        .two-grid {
+            grid-template-columns:
+                1.25fr 1fr;
+            margin-bottom: 18px;
+        }
+
+        .three-grid {
+            grid-template-columns:
+                repeat(3, 1fr);
+        }
+
+
+        /* =====================================================
+           STAT CARDS
+           ===================================================== */
+
+        .stat-card {
+            min-height: 135px;
+        }
+
+        .stat-label {
+            color: #7a8498;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .stat-value {
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        .stat-unit {
+            font-size: 13px;
+            font-weight: 600;
+            color: #7a8498;
+        }
+
+        .stat-note {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #7a8498;
+        }
+
+        .good {
+            color: #16a34a;
+        }
+
+        .warning {
+            color: #d97706;
+        }
+
+        .danger {
+            color: #dc2626;
+        }
+
+
+        /* =====================================================
+           PATIENT OVERVIEW
+           ===================================================== */
+
+        .patient-overview {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 18px;
+        }
+
+        .large-avatar {
+            width: 62px;
+            height: 62px;
+            border-radius: 18px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .patient-name {
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .patient-details {
+            color: #7a8498;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+
+        /* =====================================================
+           ADHERENCE
+           ===================================================== */
+
+        .adherence-number {
+            font-size: 42px;
+            font-weight: 850;
+            margin-top: 20px;
+        }
+
+        .progress-track {
+            height: 10px;
+            border-radius: 999px;
+            background: #edf0f5;
+            margin-top: 14px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            border-radius: 999px;
+            background: #2563eb;
+            transition: width 0.6s ease;
+        }
+
+        .adherence-text {
+            color: #7a8498;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+
+        /* =====================================================
+           MEDICATION
+           ===================================================== */
+
+        .med-list {
+            margin-top: 16px;
+        }
+
+        .med-item {
+            padding: 14px 0;
+            border-bottom: 1px solid #eef0f4;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .med-item:last-child {
+            border-bottom: none;
+        }
+
+        .med-main {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .med-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .med-name {
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .med-details {
+            color: #8a93a5;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .status {
+            padding: 6px 9px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 750;
+            white-space: nowrap;
+        }
+
+        .status-taken {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .status-missed {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #a16207;
+        }
+
+
+        /* =====================================================
+           HISTORY
+           ===================================================== */
+
+        .history-list {
+            margin-top: 15px;
+            max-height: 360px;
+            overflow-y: auto;
+        }
+
+        .history-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eef0f4;
+        }
+
+        .history-row:last-child {
+            border-bottom: none;
+        }
+
+        .history-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .history-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+        }
+
+        .history-name {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .history-time {
+            font-size: 10px;
+            color: #8a93a5;
+            margin-top: 3px;
+        }
+
+
+        /* =====================================================
+           APPOINTMENTS
+           ===================================================== */
+
+        .appointment {
+            border: 1px solid #edf0f4;
+            border-radius: 13px;
+            padding: 14px;
+            margin-top: 12px;
+        }
+
+        .appointment-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .doctor-name {
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .doctor-specialty {
+            color: #7a8498;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .appointment-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 11px;
+        }
+
+        .meta-pill {
+            background: #f8fafc;
+            padding: 6px 9px;
+            border-radius: 8px;
+            color: #687286;
+            font-size: 10px;
+        }
+
+
+        /* =====================================================
+           ALERTS
+           ===================================================== */
+
+        .alert {
+            border-radius: 13px;
+            padding: 13px;
+            margin-top: 11px;
+            display: flex;
+            gap: 11px;
+            align-items: flex-start;
+        }
+
+        .alert-emergency {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+        }
+
+        .alert-icon {
+            font-size: 18px;
+        }
+
+        .alert-title {
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .alert-text {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 3px;
+            line-height: 1.4;
+        }
+
+
+        /* =====================================================
+           ACTIONS
+           ===================================================== */
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .primary-btn,
+        .secondary-btn,
+        .danger-btn {
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 12px;
+            font-weight: 750;
+            transition: 0.2s ease;
+        }
+
+        .primary-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary-btn {
+            background: #eef2f7;
+            color: #344054;
+        }
+
+        .secondary-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .danger-btn {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .danger-btn:hover {
+            background: #fecaca;
+        }
+
+
+        /* =====================================================
+           EMPTY
+           ===================================================== */
+
+        .empty {
+            text-align: center;
+            color: #8a93a5;
+            padding: 25px 10px;
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           MODAL
+           ===================================================== */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 100;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            width: min(520px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            padding: 23px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .modal-header h3 {
+            font-size: 19px;
+        }
+
+        .close-btn {
+            border: none;
+            background: #f1f5f9;
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-top: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            border: 1px solid #dce1e9;
+            border-radius: 10px;
+            padding: 10px 12px;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #2563eb;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+
+        /* =====================================================
+           TOAST
+           ===================================================== */
+
+        #toast-container {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: #172033;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 11px;
+            font-size: 12px;
+            box-shadow:
+                0 8px 30px rgba(15, 23, 42, 0.18);
+            animation: toastIn 0.25s ease;
+        }
+
+        .toast.error {
+            background: #b91c1c;
+        }
+
+        .toast.success {
+            background: #15803d;
+        }
+
+        @keyframes toastIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .two-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .three-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 13px 4%;
+            }
+
+            .role-badge {
+                display: none;
+            }
+
+            .container {
+                width: 94%;
+                padding-top: 22px;
+            }
+
+            .welcome h1 {
+                font-size: 23px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .card {
+                padding: 16px;
+                border-radius: 15px;
+            }
+
+            .stat-value {
+                font-size: 25px;
+            }
+
+            .patient-chip span {
+                display: none;
+            }
+
+        }
+
+    
+            .status-confirmed {
+                background: #dcfce7;
+                color: #15803d;
+            }
+
+            .status-requested {
+                background: #fef3c7;
+                color: #b45309;
+            }
+
+            .status-rejected {
+                background: #fee2e2;
+                color: #b91c1c;
+            }
+
+            .status-cancelled {
+                background: #e5e7eb;
+                color: #4b5563;
+            }
+
+
+        .role-switcher { display:flex; align-items:center; gap:3px; padding:4px; background:#f1f5f9; border:1px solid #e2e8f0; border-radius:12px; }
+        .role-switch { color:#64748b; text-decoration:none; font-size:11px; font-weight:800; padding:7px 9px; border-radius:9px; white-space:nowrap; }
+        .role-switch:hover { background:#e2e8f0; color:#172033; }
+        .role-switch.active { background:#2563eb; color:white; box-shadow:0 2px 6px rgba(37,99,235,.18); }
+        @media(max-width:700px){ .role-switch{padding:6px 7px;font-size:10px;} .role-switcher{gap:2px;} }
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                C
+            </div>
+
+            <div>
+
+                <div class="brand-name">
+                    Caretakers
+                </div>
+
+                <div class="brand-subtitle">
+                    Connected healthcare
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="header-right">
+
+            <div class="role-switcher" aria-label="Switch dashboard role">
+                <a href="/" class="role-switch">Patient</a>
+                <a href="/doctor" class="role-switch">Doctor</a>
+                <a href="/caretaker" class="role-switch active">Caretaker</a>
+            </div>
+
+            <div class="role-badge">
+                CARETAKER VIEW
+            </div>
+
+            <div class="patient-chip">
+
+                <div class="patient-avatar">
+                    D
+                </div>
+
+                <span>
+                    Patient Dashboard
+                </span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="container">
+
+        <div class="welcome">
+
+            <h1>
+                Caretaker Dashboard
+            </h1>
+
+            <p>
+                Stay connected with the patient's health,
+                medication adherence and appointments.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             PATIENT CARD
+             ================================================= -->
+
+        <div class="card"
+             style="margin-bottom:18px;">
+
+            <div class="card-title">
+                Patient overview
+            </div>
+
+            <div class="card-subtitle">
+                Real-time information shared with you
+            </div>
+
+
+            <div class="patient-overview">
+
+                <div class="large-avatar">
+                    D
+                </div>
+
+                <div>
+
+                    <div class="patient-name">
+                        Deeptanshu
+                    </div>
+
+                    <div class="patient-details">
+                        Connected caretaker access ·
+                        Health information sharing enabled
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             HEALTH STATS
+             ================================================= -->
+
+        <div class="grid stats-grid">
+
+            <div class="card stat-card">
+
+                <div class="stat-label">
+                    Heart rate
+                </div>
+
+                <div>
+                    <span
+                        id="heart-rate"
+                        class="stat-value"
+                    >
+                        --
+                    </span>
+
+                    <span class="stat-unit">
+                        BPM
+                    </span>
+                </div>
+
+                <div
+                    id="heart-note"
+                    class="stat-note"
+                >
+                    Waiting for device data
+                </div>
+
+            </div>
+
+
+            <div class="card stat-card">
+
+                <div class="stat-label">
+                    Blood oxygen
+                </div>
+
+                <div>
+                    <span
+                        id="spo2"
+                        class="stat-value"
+                    >
+                        --
+                    </span>
+
+                    <span class="stat-unit">
+                        %
+                    </span>
+                </div>
+
+                <div class="stat-note">
+                    SpO₂
+                </div>
+
+            </div>
+
+
+            <div class="card stat-card">
+
+                <div class="stat-label">
+                    Today's steps
+                </div>
+
+                <div>
+                    <span
+                        id="steps"
+                        class="stat-value"
+                    >
+                        --
+                    </span>
+                </div>
+
+                <div class="stat-note">
+                    Activity
+                </div>
+
+            </div>
+
+
+            <div class="card stat-card">
+
+                <div class="stat-label">
+                    Calories
+                </div>
+
+                <div>
+                    <span
+                        id="calories"
+                        class="stat-value"
+                    >
+                        --
+                    </span>
+
+                    <span class="stat-unit">
+                        kcal
+                    </span>
+                </div>
+
+                <div class="stat-note">
+                    Estimated today
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ADHERENCE + ALERTS
+             ================================================= -->
+
+        <div class="grid two-grid">
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Medication adherence
+                </div>
+
+                <div class="card-subtitle">
+                    Current medication-taking pattern
+                </div>
+
+
+                <div
+                    id="adherence-value"
+                    class="adherence-number"
+                >
+                    --
+                </div>
+
+
+                <div class="progress-track">
+
+                    <div
+                        id="adherence-bar"
+                        class="progress-bar"
+                    ></div>
+
+                </div>
+
+
+                <div
+                    id="adherence-status"
+                    class="adherence-text"
+                >
+                    Loading adherence report...
+                </div>
+
+
+                <div
+                    id="medication-summary"
+                    class="adherence-text"
+                >
+                </div>
+
+
+                <div class="actions">
+
+                    <button
+                        class="primary-btn"
+                        onclick="showMedicationReport()"
+                    >
+                        View full report
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Alerts
+                </div>
+
+                <div class="card-subtitle">
+                    Events that may need your attention
+                </div>
+
+
+                <div id="alerts-list">
+
+                    <div class="empty">
+                        Loading alerts...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MEDICATION + HISTORY
+             ================================================= -->
+
+        <div class="grid two-grid">
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Current medications
+                </div>
+
+                <div class="card-subtitle">
+                    Prescribed medication schedule
+                </div>
+
+
+                <div
+                    id="medication-list"
+                    class="med-list"
+                >
+
+                    <div class="empty">
+                        Loading medications...
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Medication history
+                </div>
+
+                <div class="card-subtitle">
+                    Recent Taken / Missed activity
+                </div>
+
+
+                <div
+                    id="medication-history"
+                    class="history-list"
+                >
+
+                    <div class="empty">
+                        Loading history...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             APPOINTMENTS
+             ================================================= -->
+
+        <div class="card"
+             style="margin-bottom:18px;">
+
+            <div class="card-title">
+                Upcoming appointments
+            </div>
+
+            <div class="card-subtitle">
+                Patient's scheduled consultations
+            </div>
+
+
+            <div
+                id="appointment-list"
+            >
+
+                <div class="empty">
+                    Loading appointments...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             CARETAKER ACTIONS
+             ================================================= -->
+
+        <div class="grid three-grid">
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Emergency support
+                </div>
+
+                <div class="card-subtitle">
+                    Respond quickly when something needs attention.
+                </div>
+
+                <div class="actions">
+
+                    <button
+                        class="danger-btn"
+                        onclick="sendSOS()"
+                    >
+                        🚨 Emergency SOS
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Patient communication
+                </div>
+
+                <div class="card-subtitle">
+                    Start a conversation with the patient.
+                </div>
+
+                <div class="actions">
+
+                    <button
+                        class="primary-btn"
+                        onclick="openMessageModal()"
+                    >
+                        💬 Message patient
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Care access
+                </div>
+
+                <div class="card-subtitle">
+                    Review the information currently shared with you.
+                </div>
+
+                <div class="actions">
+
+                    <button
+                        class="secondary-btn"
+                        onclick="showAccessModal()"
+                    >
+                        View access
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     MODAL
+     ========================================================= -->
+
+<div
+    id="modal-overlay"
+    class="modal-overlay"
+    onclick="closeModalOnOverlay(event)"
+>
+
+    <div
+        id="modal"
+        class="modal"
+    ></div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+     ========================================================= -->
+
+<div id="toast-container"></div>
+
+
+<script>
+
+"use strict";
+
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+
+function $(id) {
+    return document.getElementById(id);
+}
+
+
+async function api(
+    url,
+    options = {}
+) {
+
+    try {
+
+        const response =
+            await fetch(
+                url,
+                {
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+                    ...options
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Request failed"
+            );
+        }
+
+
+        return data;
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+        throw error;
+    }
+}
+
+
+function escapeHtml(value) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+function showToast(
+    message,
+    type = "success"
+) {
+
+    const container =
+        $("toast-container");
+
+    if (!container) return;
+
+
+    const toast =
+        document.createElement(
+            "div"
+        );
+
+    toast.className =
+        `toast ${type}`;
+
+    toast.textContent =
+        message;
+
+
+    container.appendChild(
+        toast
+    );
+
+
+    setTimeout(
+        () => toast.remove(),
+        3500
+    );
+}
+
+
+/* ============================================================
+   HEALTH
+   ============================================================ */
+
+async function loadHealth() {
+
+    try {
+
+        const health =
+            await api(
+                "/api/health"
+            );
+
+
+        if ($("heart-rate")) {
+
+            $("heart-rate")
+                .textContent =
+                health.heart_rate;
+        }
+
+
+        if ($("spo2")) {
+
+            $("spo2")
+                .textContent =
+                health.spo2;
+        }
+
+
+        if ($("steps")) {
+
+            $("steps")
+                .textContent =
+                Number(
+                    health.steps
+                ).toLocaleString();
+        }
+
+
+        if ($("calories")) {
+
+            $("calories")
+                .textContent =
+                health.calories;
+        }
+
+
+        if ($("heart-note")) {
+
+            $("heart-note")
+                .textContent =
+                "Latest synced reading";
+        }
+
+    } catch (error) {
+
+        console.error(error);
+    }
+}
+
+
+/* ============================================================
+   MEDICATIONS
+   ============================================================ */
+
+async function loadMedications() {
+
+    try {
+
+        const data =
+            await api(
+                "/api/medications"
+            );
+
+
+        const medications =
+            data.medications || [];
+
+        const log =
+            data.log || [];
+
+        renderMedications(
+            medications,
+            log
+        );
+
+        renderHistory(
+            log
+        );
+
+        updateAdherence(
+            data.report
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        showToast(
+            "Could not load medication data",
+            "error"
+        );
+    }
+}
+
+
+function renderMedications(
+    medications,
+    log
+) {
+
+    const container =
+        $("medication-list");
+
+    if (!container) return;
+
+
+    if (!medications.length) {
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                No medications available.
+            </div>
+            `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        medications.map(
+            medication => {
+
+                const latest =
+                    log.find(
+                        entry =>
+                            Number(
+                                entry.medication_id
+                            ) ===
+                            Number(
+                                medication.id
+                            )
+                    );
+
+
+                let status =
+                    "Pending";
+
+                let statusClass =
+                    "status-pending";
+
+
+                if (
+                    latest &&
+                    latest.status === "Taken"
+                ) {
+
+                    status =
+                        "Taken";
+
+                    statusClass =
+                        "status-taken";
+
+                } else if (
+                    latest &&
+                    latest.status === "Missed"
+                ) {
+
+                    status =
+                        "Missed";
+
+                    statusClass =
+                        "status-missed";
+                }
+
+
+                return `
+
+                    <div class="med-item">
+
+                        <div class="med-main">
+
+                            <div class="med-icon">
+                                💊
+                            </div>
+
+                            <div>
+
+                                <div class="med-name">
+                                    ${escapeHtml(
+                                        medication.name
+                                    )}
+                                </div>
+
+                                <div class="med-details">
+                                    ${escapeHtml(
+                                        medication.dosage
+                                    )}
+                                    ·
+                                    ${escapeHtml(
+                                        medication.time
+                                    )}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <span
+                            class="status ${statusClass}"
+                        >
+                            ${status}
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+}
+
+
+function renderHistory(
+    log
+) {
+
+    const container =
+        $("medication-history");
+
+    if (!container) return;
+
+
+    if (!log.length) {
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                No medication history yet.
+            </div>
+            `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        log.slice(0, 30)
+            .map(entry => {
+
+                const taken =
+                    entry.status === "Taken";
+
+
+                return `
+
+                    <div class="history-row">
+
+                        <div class="history-left">
+
+                            <div class="history-icon">
+                                ${
+                                    taken
+                                    ? "✓"
+                                    : "⚠️"
+                                }
+                            </div>
+
+                            <div>
+
+                                <div class="history-name">
+                                    ${escapeHtml(
+                                        entry.medicine
+                                    )}
+                                </div>
+
+                                <div class="history-time">
+                                    ${escapeHtml(
+                                        entry.date || ""
+                                    )}
+                                    ·
+                                    ${escapeHtml(
+                                        entry.recorded_at || ""
+                                    )}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <span
+                            class="status ${
+                                taken
+                                ? "status-taken"
+                                : "status-missed"
+                            }"
+                        >
+                            ${escapeHtml(
+                                entry.status
+                            )}
+                        </span>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+}
+
+
+function updateAdherence(
+    report
+) {
+
+    if (!report) return;
+
+
+    if ($("adherence-value")) {
+
+        $("adherence-value")
+            .textContent =
+            `${report.adherence}%`;
+    }
+
+
+    if ($("adherence-bar")) {
+
+        $("adherence-bar")
+            .style.width =
+            `${report.adherence}%`;
+    }
+
+
+    if ($("adherence-status")) {
+
+        $("adherence-status")
+            .textContent =
+            report.status;
+    }
+
+
+    if ($("medication-summary")) {
+
+        $("medication-summary")
+            .textContent =
+            `${report.taken} taken · ` +
+            `${report.missed} missed · ` +
+            `${report.pending} pending doses`;
+    }
+}
+
+
+/* ============================================================
+   FULL MEDICATION REPORT
+   ============================================================ */
+
+async function showMedicationReport() {
+
+    try {
+
+        const data =
+            await api(
+                "/api/medications/report"
+            );
+
+
+        const report =
+            data.report || data;
+
+
+        openModal(`
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h3>
+                        Medication adherence report
+                    </h3>
+
+                    <div
+                        style="
+                            color:#7a8498;
+                            font-size:11px;
+                            margin-top:4px;
+                        "
+                    >
+                        Shared patient medication summary
+                    </div>
+
+                </div>
+
+                <button
+                    class="close-btn"
+                    onclick="closeModal()"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <div
+                style="
+                    text-align:center;
+                    padding:12px 0 20px;
+                "
+            >
+
+                <div
+                    style="
+                        font-size:46px;
+                        font-weight:850;
+                    "
+                >
+                    ${report.adherence}%
+                </div>
+
+                <div
+                    style="
+                        color:#7a8498;
+                        font-size:12px;
+                    "
+                >
+                    ${escapeHtml(
+                        report.status
+                    )}
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:
+                        repeat(3, 1fr);
+                    gap:10px;
+                "
+            >
+
+                <div
+                    style="
+                        background:#f0fdf4;
+                        padding:14px;
+                        border-radius:12px;
+                        text-align:center;
+                    "
+                >
+
+                    <strong>
+                        ${report.taken}
+                    </strong>
+
+                    <div
+                        style="
+                            color:#15803d;
+                            font-size:10px;
+                            margin-top:4px;
+                        "
+                    >
+                        Taken
+                    </div>
+
+                </div>
+
+
+                <div
+                    style="
+                        background:#fef2f2;
+                        padding:14px;
+                        border-radius:12px;
+                        text-align:center;
+                    "
+                >
+
+                    <strong>
+                        ${report.missed}
+                    </strong>
+
+                    <div
+                        style="
+                            color:#b91c1c;
+                            font-size:10px;
+                            margin-top:4px;
+                        "
+                    >
+                        Missed
+                    </div>
+
+                </div>
+
+
+                <div
+                    style="
+                        background:#fffbeb;
+                        padding:14px;
+                        border-radius:12px;
+                        text-align:center;
+                    "
+                >
+
+                    <strong>
+                        ${report.pending}
+                    </strong>
+
+                    <div
+                        style="
+                            color:#a16207;
+                            font-size:10px;
+                            margin-top:4px;
+                        "
+                    >
+                        Pending
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                    margin-top:18px;
+                    padding:13px;
+                    border-radius:11px;
+                    background:#f8fafc;
+                    color:#64748b;
+                    font-size:11px;
+                    line-height:1.5;
+                "
+            >
+                This report helps caretakers understand
+                medication-taking patterns. It does not
+                replace clinical advice.
+            </div>
+
+        `);
+
+    } catch (error) {
+
+        showToast(
+            "Unable to load full report",
+            "error"
+        );
+    }
+}
+
+
+/* ============================================================
+   ALERTS
+   ============================================================ */
+
+async function loadAlerts() {
+
+    try {
+
+        const alerts =
+            await api(
+                "/api/alerts"
+            );
+
+
+        renderAlerts(
+            alerts
+        );
+
+    } catch (error) {
+
+        console.error(error);
+    }
+}
+
+
+function renderAlerts(
+    alerts
+) {
+
+    const container =
+        $("alerts-list");
+
+    if (!container) return;
+
+
+    if (!alerts.length) {
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                No active alerts.
+            </div>
+            `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        alerts.slice(0, 6)
+            .map(alert => {
+
+                let className =
+                    "alert-info";
+
+                let icon =
+                    "ℹ️";
+
+
+                if (
+                    alert.type === "emergency"
+                    ||
+                    alert.severity === "high"
+                ) {
+
+                    className =
+                        "alert-emergency";
+
+                    icon =
+                        "🚨";
+
+                } else if (
+                    alert.severity === "medium"
+                ) {
+
+                    className =
+                        "alert-warning";
+
+                    icon =
+                        "⚠️";
+                }
+
+
+                return `
+
+                    <div
+                        class="alert ${className}"
+                    >
+
+                        <div class="alert-icon">
+                            ${icon}
+                        </div>
+
+                        <div>
+
+                            <div class="alert-title">
+                                ${escapeHtml(
+                                    alert.title ||
+                                    alert.type ||
+                                    "Alert"
+                                )}
+                            </div>
+
+                            <div class="alert-text">
+                                ${escapeHtml(
+                                    alert.message ||
+                                    alert.description ||
+                                    ""
+                                )}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }).join("");
+}
+
+
+/* ============================================================
+   APPOINTMENTS
+   ============================================================ */
+
+async function loadAppointments() {
+
+    try {
+
+        const appointments =
+            await api(
+                "/api/appointments"
+            );
+
+
+        renderAppointments(
+            appointments
+        );
+
+    } catch (error) {
+
+        console.error(error);
+    }
+}
+
+
+function renderAppointments(
+    appointments
+) {
+
+    const container =
+        $("appointment-list");
+
+    if (!container) return;
+
+
+    if (!appointments.length) {
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                No upcoming appointments.
+            </div>
+            `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        appointments.map(
+            appointment => {
+
+                return `
+
+                    <div class="appointment">
+
+                        <div class="appointment-top">
+
+                            <div>
+
+                                <div class="doctor-name">
+                                    ${escapeHtml(
+                                        appointment.doctor
+                                    )}
+                                </div>
+
+                                <div class="doctor-specialty">
+                                    ${escapeHtml(
+                                        appointment.specialty
+                                    )}
+                                </div>
+
+                            </div>
+
+                            <span
+                                class="status ${
+                                    String(
+                                        appointment.status || "Booked"
+                                    ).toLowerCase() === "confirmed"
+                                        ? "status-confirmed"
+                                        : String(
+                                            appointment.status || "Booked"
+                                        ).toLowerCase() === "rejected"
+                                            ? "status-rejected"
+                                            : String(
+                                                appointment.status || "Booked"
+                                            ).toLowerCase() === "cancelled"
+                                                ? "status-cancelled"
+                                                : "status-requested"
+                                }"
+                            >
+                                ${escapeHtml(
+                                    appointment.status ||
+                                    "Booked"
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="appointment-meta">
+
+                            <span class="meta-pill">
+                                📅
+                                ${escapeHtml(
+                                    appointment.date
+                                )}
+                            </span>
+
+                            <span class="meta-pill">
+                                🕐
+                                ${escapeHtml(
+                                    appointment.time
+                                )}
+                            </span>
+
+                            <span class="meta-pill">
+                                ${
+                                    appointment.mode ===
+                                    "Online"
+                                    ? "💻 Online"
+                                    : "🏥 Hospital"
+                                }
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+}
+
+
+/* ============================================================
+   SOS
+   ============================================================ */
+
+async function sendSOS() {
+
+    const confirmed =
+        window.confirm(
+            "Send an emergency SOS to the patient's care team?"
+        );
+
+
+    if (!confirmed) return;
+
+
+    try {
+
+        await api(
+            "/api/sos",
+            {
+                method: "POST"
+            }
+        );
+
+
+        showToast(
+            "Emergency SOS sent",
+            "error"
+        );
+
+
+        await loadAlerts();
+        if (window.loadCaretakersRisk) loadCaretakersRisk();
+
+    } catch (error) {
+
+        showToast(
+            error.message,
+            "error"
+        );
+    }
+}
+
+
+/* ============================================================
+   MESSAGE PATIENT
+   ============================================================ */
+
+function openMessageModal() {
+
+    openModal(`
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3>
+                    Message patient
+                </h3>
+
+                <div
+                    style="
+                        color:#7a8498;
+                        font-size:11px;
+                        margin-top:4px;
+                    "
+                >
+                    Send a message through the care channel.
+                </div>
+
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Message
+            </label>
+
+            <input
+                id="care-message"
+                placeholder="Type your message..."
+            >
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="secondary-btn"
+                onclick="closeModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="primary-btn"
+                onclick="sendPatientMessage()"
+            >
+                Send message
+            </button>
+
+        </div>
+
+    `);
+}
+
+
+async function sendPatientMessage() {
+
+    const input =
+        $("care-message");
+
+
+    const message =
+        input?.value.trim();
+
+
+    if (!message) {
+
+        showToast(
+            "Enter a message",
+            "error"
+        );
+
+        return;
+    }
+
+
+    try {
+
+        await api(
+            "/api/chat",
+            {
+                method: "POST",
+
+                body: JSON.stringify({
+
+                    message,
+
+                    mode: "care"
+                })
+            }
+        );
+
+
+        closeModal();
+
+        showToast(
+            "Message sent ✓",
+            "success"
+        );
+
+    } catch (error) {
+
+        showToast(
+            error.message,
+            "error"
+        );
+    }
+}
+
+
+/* ============================================================
+   ACCESS
+   ============================================================ */
+
+function showAccessModal() {
+
+    openModal(`
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3>
+                    Caretaker access
+                </h3>
+
+                <div
+                    style="
+                        color:#7a8498;
+                        font-size:11px;
+                        margin-top:4px;
+                    "
+                >
+                    Information currently shared with you.
+                </div>
+
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div
+            style="
+                display:grid;
+                gap:9px;
+            "
+        >
+
+            <div class="appointment">
+                <strong>
+                    ✓ Health metrics
+                </strong>
+
+                <div class="doctor-specialty">
+                    Heart rate, SpO₂, steps and calories
+                </div>
+            </div>
+
+
+            <div class="appointment">
+                <strong>
+                    ✓ Medication information
+                </strong>
+
+                <div class="doctor-specialty">
+                    Medication schedule and adherence
+                </div>
+            </div>
+
+
+            <div class="appointment">
+                <strong>
+                    ✓ Appointments
+                </strong>
+
+                <div class="doctor-specialty">
+                    Upcoming doctor consultations
+                </div>
+            </div>
+
+
+            <div class="appointment">
+                <strong>
+                    ✓ Emergency alerts
+                </strong>
+
+                <div class="doctor-specialty">
+                    SOS and important care notifications
+                </div>
+            </div>
+
+        </div>
+
+    `);
+}
+
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+function openModal(
+    html
+) {
+
+    const overlay =
+        $("modal-overlay");
+
+    const modal =
+        $("modal");
+
+
+    modal.innerHTML =
+        html;
+
+    overlay.classList.add(
+        "open"
+    );
+
+    document.body.style.overflow =
+        "hidden";
+}
+
+
+function closeModal() {
+
+    const overlay =
+        $("modal-overlay");
+
+    const modal =
+        $("modal");
+
+
+    overlay.classList.remove(
+        "open"
+    );
+
+    modal.innerHTML =
+        "";
+
+    document.body.style.overflow =
+        "";
+}
+
+
+function closeModalOnOverlay(
+    event
+) {
+
+    if (
+        event.target ===
+        $("modal-overlay")
+    ) {
+
+        closeModal();
+    }
+}
+
+
+/* ============================================================
+   INITIAL LOAD
+   ============================================================ */
+
+async function loadDashboard() {
+
+    await Promise.allSettled([
+
+        loadHealth(),
+
+        loadMedications(),
+
+        loadAlerts(),
+
+        loadAppointments()
+
+    ]);
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        loadDashboard();
+
+    }
+);
+
+
+/*
+ * Refresh health + medication information every 15 seconds.
+ */
+
+setInterval(
+    () => {
+
+        loadHealth();
+        loadMedications();
+        loadAlerts();
+
+    },
+    15000
+);
+
+</script>
+
+<style>
+.caretakers-ai-feature{margin:28px auto;max-width:1180px;background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:24px;box-shadow:0 10px 30px rgba(15,23,42,.06)}
+.caretakers-ai-feature h2{margin:0 0 8px;font-size:24px;font-weight:800;color:#172033}.caretakers-ai-feature p{color:#64748b;margin:0 0 18px;line-height:1.55}
+.caretakers-ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.caretakers-ai-panel{border:1px solid #e2e8f0;border-radius:18px;padding:20px;background:#f8fafc}.caretakers-ai-panel#caretakers-add-medicine-panel{grid-column:1/-1;padding:26px;min-height:270px}.caretakers-ai-panel h3{margin:0 0 8px;font-size:17px;font-weight:750;color:#1e293b}.caretakers-ai-btn{border:0;border-radius:12px;padding:11px 15px;background:#2563eb;color:white;font-weight:700}.caretakers-ai-btn.secondary{background:#0f766e}.caretakers-ai-btn:disabled{opacity:.55;cursor:not-allowed}.caretakers-upload{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.caretakers-upload input[type=file]{max-width:100%}.caretakers-risk{display:none}.caretakers-risk img{width:100%;max-height:420px;object-fit:cover;border-radius:16px;border:1px solid #e2e8f0}.caretakers-risk-meta{margin-top:10px;font-size:14px;color:#64748b}.caretakers-prescription-list{display:flex;flex-direction:column;gap:9px;margin-top:12px}.caretakers-file{padding:11px 12px;border-radius:12px;background:white;border:1px solid #e5e7eb;display:flex;justify-content:space-between;gap:12px;align-items:center}.caretakers-file a{color:#2563eb;font-weight:700;text-decoration:none}.caretakers-med-form{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}.caretakers-med-form input{padding:13px 14px;border:1px solid #d1d5db;border-radius:10px;background:#fff}.caretakers-med-form button{grid-column:1/-1;padding:13px 16px;font-size:15px}
+@media(max-width:800px){.caretakers-ai-grid{grid-template-columns:1fr}.caretakers-ai-panel#caretakers-add-medicine-panel{grid-column:auto}.caretakers-med-form{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.caretakers-med-form{grid-template-columns:1fr}}
+</style>
+
+<section class="caretakers-ai-feature" id="caretakers-ai-feature">
+  <h2>Medication Safety & Prescription Center</h2>
+  <p>Upload a new prescription from the device camera or files. The AI adherence monitor also creates an educational risk visual when medication adherence falls below 75% (critical below 70%).</p>
+  <div class="caretakers-ai-grid">
+    <div class="caretakers-ai-panel">
+      <h3>AI adherence risk visual</h3>
+      <p id="caretakers-risk-message">Checking medication adherence…</p>
+      <div class="caretakers-risk" id="caretakers-risk-box">
+        <img id="caretakers-risk-image" alt="AI medication adherence risk visualization">
+        <div class="caretakers-risk-meta" id="caretakers-risk-meta"></div>
+      </div>
+    </div>
+    <div class="caretakers-ai-panel">
+      <h3>Upload prescription / medicine</h3>
+      <p>On a phone or tablet, the camera option can capture a fresh prescription directly.</p>
+      <div class="caretakers-upload">
+        <input id="caretakers-prescription-file" type="file" accept="image/*,.pdf" capture="environment">
+        <button class="caretakers-ai-btn" type="button" onclick="uploadCaretakersPrescription()">Upload</button>
+      </div>
+      <div id="caretakers-upload-status" class="caretakers-risk-meta"></div>
+    </div>
+    <div class="caretakers-ai-panel" id="caretakers-add-medicine-panel">
+      <h3>Add a prescribed medicine</h3>
+      <p>Doctor or caretaker can add a new medicine after reviewing the uploaded prescription.</p>
+      <div class="caretakers-med-form">
+        <input id="caretakers-med-name" placeholder="Medicine name">
+        <input id="caretakers-med-dose" placeholder="Dosage e.g. 25 mg">
+        <input id="caretakers-med-time" placeholder="Time e.g. 08:00 AM">
+        <input id="caretakers-med-frequency" placeholder="Frequency e.g. Once daily">
+        <button class="caretakers-ai-btn secondary" type="button" onclick="addCaretakersMedicine()">Add medicine</button>
+      </div>
+      <div id="caretakers-med-status" class="caretakers-risk-meta"></div>
+    </div>
+  </div>
+  <div class="caretakers-ai-panel" style="margin-top:18px">
+    <h3>Recent prescription uploads</h3>
+    <div id="caretakers-prescription-list" class="caretakers-prescription-list"></div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const pageRole = "caretaker";
+  const addPanel = document.getElementById("caretakers-add-medicine-panel");
+  if (pageRole === "patient" && addPanel) addPanel.style.display = "none";
+
+  window.uploadCaretakersPrescription = async function(){
+    const input = document.getElementById("caretakers-prescription-file");
+    const status = document.getElementById("caretakers-upload-status");
+    if (!input.files.length) { status.textContent = "Choose a prescription first."; return; }
+    const fd = new FormData(); fd.append("prescription", input.files[0]); fd.append("role", pageRole);
+    status.textContent = "Uploading…";
+    try {
+      const r = await fetch("/api/prescriptions", {method:"POST", body:fd});
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || "Upload failed");
+      status.textContent = "Uploaded successfully. The file is now available to the care team.";
+      input.value = ""; loadCaretakersPrescriptions();
+    } catch(e) { status.textContent = e.message; }
+  };
+
+  window.addCaretakersMedicine = async function(){
+    const name = document.getElementById("caretakers-med-name").value.trim();
+    const dosage = document.getElementById("caretakers-med-dose").value.trim();
+    const time = document.getElementById("caretakers-med-time").value.trim();
+    const frequency = document.getElementById("caretakers-med-frequency").value.trim() || "Once daily";
+    const status = document.getElementById("caretakers-med-status");
+    if (!name) { status.textContent = "Enter the medicine name."; return; }
+    status.textContent = "Saving…";
+    try {
+      const r = await fetch("/api/medications", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({name,dosage,time,frequency})});
+      const data = await r.json(); if (!r.ok) throw new Error(data.error || "Could not add medicine");
+      status.textContent = `${data.name} added to the patient's medication plan.`;
+      document.getElementById("caretakers-med-name").value=""; document.getElementById("caretakers-med-dose").value="";
+      document.getElementById("caretakers-med-time").value=""; document.getElementById("caretakers-med-frequency").value="";
+    } catch(e) { status.textContent = e.message; }
+  };
+
+  async function loadCaretakersRisk(){
+    try {
+      const r = await fetch("/api/adherence-risk", {method:"POST"});
+      const d = await r.json();
+      const msg = document.getElementById("caretakers-risk-message");
+      const box = document.getElementById("caretakers-risk-box");
+      if (!d.triggered) { msg.textContent = `Current adherence is ${d.adherence}%. AI risk visualization activates below 75%.`; box.style.display="none"; return; }
+      msg.textContent = d.message || `Adherence is ${d.adherence}%. Review missed doses with the care team.`;
+      box.style.display="block"; document.getElementById("caretakers-risk-image").src=d.url + "?v=" + Date.now();
+      document.getElementById("caretakers-risk-meta").textContent = `${d.provider === "openai" ? "AI-generated educational visual" : "Automatically generated demo educational visual"} at ${d.adherence}% adherence.`;
+    } catch(e) { document.getElementById("caretakers-risk-message").textContent="AI adherence monitor is unavailable right now."; }
+  }
+
+  async function loadCaretakersPrescriptions(){
+    const list=document.getElementById("caretakers-prescription-list"); if(!list) return;
+    try { const r=await fetch("/api/prescriptions"); const d=await r.json();
+      list.innerHTML=(d.prescriptions||[]).slice(0,8).map(x=>`<div class="caretakers-file"><span><strong>${x.uploaded_by}</strong> · ${x.original_name}<br><small>${x.uploaded_at}</small></span><a href="${x.url}" target="_blank" rel="noopener">View</a></div>`).join("") || "<div class='caretakers-risk-meta'>No prescriptions uploaded yet.</div>";
+    } catch(e) { list.textContent="Could not load uploads."; }
+  }
+  window.loadCaretakersRisk = loadCaretakersRisk;
+  window.loadCaretakersPrescriptions = loadCaretakersPrescriptions;
+  document.addEventListener("DOMContentLoaded", ()=>{ loadCaretakersRisk(); loadCaretakersPrescriptions(); });
+})();
+</script>
+
+</body>
+</html>

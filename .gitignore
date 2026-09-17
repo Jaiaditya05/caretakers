@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+.DS_Store
+
+*.log
+data/caretakers_state.json
